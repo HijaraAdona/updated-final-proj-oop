@@ -358,6 +358,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             if (loginUser(username, password)) {
                 JOptionPane.showMessageDialog(this, "Login successful. Welcome, " + username + "!");
                 openAddProductFrame();
+                setLoginFrameVisibility(false); // Hide the login frame
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed. Incorrect username or password.", "Login Unsuccessful", JOptionPane.ERROR_MESSAGE);
             }
@@ -365,6 +366,11 @@ public class LoginFrame extends JFrame implements ActionListener {
             openRegisterFrame();
         }
     }    
+    
+    public void setLoginFrameVisibility(boolean visible) {
+        setVisible(visible);
+    }
+    
     private void openAddProductFrame() {
         AddProductFrame addProductFrame = new AddProductFrame();
         addProductFrame.addWindowListener(new java.awt.event.WindowAdapter() {
