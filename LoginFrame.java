@@ -268,17 +268,25 @@ class RegisterFrame extends JFrame implements ActionListener {
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
         if (e.getSource() == registerButton) {
-            if (registerUser(id, username, password)) {
-                // Add the new user to the list of registered users in LoginFrame
-                loginFrame.addRegisteredUser(new User(id, username, password));
-                JOptionPane.showMessageDialog(this, "Registration successful. You can now log in.");
-                dispose();
-                loginFrame.setVisible(true);
+            if (validateInput(id, name, username, password, confirmPassword)) {
+                if (registerUser(id, username, password)) {
+                    // Add the new user to the list of registered users in LoginFrame
+                    loginFrame.addRegisteredUser(new User(id, username, password));
+                    JOptionPane.showMessageDialog(this, "Registration successful. You can now log in.");
+                    dispose();
+                    loginFrame.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid input. Please fill in all the fields.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == signInButton) {
             dispose();
             loginFrame.setVisible(true);
         }
+    }
+    
+    private boolean validateInput(String id, String name, String username, String password, String confirmPassword) {
+        return !id.isEmpty() && !name.isEmpty() && !username.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty();
     }
 
     private boolean registerUser(String id, String username, String password) {
@@ -382,6 +390,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 for (Product product : productList) {
                     System.out.println(product.toString() + "---------------");
                 }
+                System.exit(0);
             }
         });
     }
